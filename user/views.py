@@ -55,4 +55,4 @@ def login_view(request):
             messages.error(request, 'Invalid username or password')
     else:
         form = GymUserLoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'user/login.html', {'form': form})
