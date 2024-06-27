@@ -5,24 +5,32 @@ from .forms import GymUserRegistrationForm, GymUserLoginForm, TrainerRegistratio
 from .models import Trainer, Client, GymUser
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib import messages
+from .forms import GymUserRegistrationForm, TrainerRegistrationForm, ClientRegistrationForm
+from .models import GymUser
+
+
 def register_view(request):
     if request.method == 'POST':
         gymuser_form = GymUserRegistrationForm(request.POST)
+        trainer_form = TrainerRegistrationForm(request.POST)
+        client_form = ClientRegistrationForm(request.POST)
+
         if gymuser_form.is_valid():
             user = gymuser_form.save()
             user_type = gymuser_form.cleaned_data.get('user_type')
-            if user_type == GymUser.TRAINER:
-                trainer_form = TrainerRegistrationForm(request.POST)
-                if trainer_form.is_valid():
-                    trainer = trainer_form.save(commit=False)
-                    trainer.user = user
-                    trainer.save()
-            elif user_type == GymUser.CLIENT:
-                client_form = ClientRegistrationForm(request.POST)
-                if client_form.is_valid():
-                    client = client_form.save(commit=False)
-                    client.user = user
-                    client.save()
+
+            if user_type == GymUser.TRAINER and trainer_form.is_valid():
+                trainer = trainer_form.save(commit=False)
+                trainer.user = user
+                trainer.save()
+            elif user_type == GymUser.CLIENT and client_form.is_valid():
+                client = client_form.save(commit=False)
+                client.user = user
+                client.save()
+
             login(request, user)
             messages.success(request, f'Account created for {user.username}!')
             return redirect('home')  # Change 'home' to your home page name
@@ -31,11 +39,13 @@ def register_view(request):
         trainer_form = TrainerRegistrationForm()
         client_form = ClientRegistrationForm()
 
-    return render(request, 'user/register.html', {
+    context = {
         'gymuser_form': gymuser_form,
         'trainer_form': trainer_form,
         'client_form': client_form
-    })
+    }
+    return render(request, 'user/register.html', context)  # Change 'your_template.html' to your actual template name
+
 
 
 def login_view(request):
