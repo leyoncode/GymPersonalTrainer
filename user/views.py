@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import GymUserRegistrationForm, GymUserLoginForm, TrainerRegistrationForm, ClientRegistrationForm
 from .models import Trainer, Client, GymUser
@@ -66,3 +66,7 @@ def login_view(request):
     else:
         form = GymUserLoginForm()
     return render(request, 'user/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
