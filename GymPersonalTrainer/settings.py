@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # apps created by dev
+    'crispy_forms',
+    'crispy_bootstrap5',
     'core.apps.CoreConfig',
     'user.apps.UserConfig',
     'workout.apps.WorkoutConfig',
@@ -133,3 +136,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'user.GymUser'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

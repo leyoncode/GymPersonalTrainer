@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Register</h2>
+        <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {{ gymuser_form|crispy }}
+            <div id="trainer-form" style="display: none;">
+                <h3>Trainer Information</h3>
+                {{ trainer_form|crispy }}
+            </div>
+            <div id="client-form" style="display: none;">
+                <h3>Client Information</h3>
+                {{ client_form|crispy }}
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const userTypeField = document.querySelector('select[name="user_type"]');
+            const trainerForm = document.getElementById('trainer-form');
+            const clientForm = document.getElementById('client-form');
+
+            function toggleForms() {
+                if (userTypeField.value === 'Trainer') {
+                    trainerForm.style.display = 'block';
+                    clientForm.style.display = 'none';
+                } else if (userTypeField.value === 'Client') {
+                    trainerForm.style.display = 'none';
+                    clientForm.style.display = 'block';
+                } else {
+                    trainerForm.style.display = 'none';
+                    clientForm.style.display = 'none';
+                }
+            }
+
+            userTypeField.addEventListener('change', toggleForms);
+            toggleForms();  // Initial call to set the correct form visibility
+        });
+    </script>
+{% endblock %}
