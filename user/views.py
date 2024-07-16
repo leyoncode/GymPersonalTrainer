@@ -4,7 +4,6 @@ from django.contrib import messages
 from .forms import GymUserRegistrationForm, GymUserLoginForm, TrainerRegistrationForm, ClientRegistrationForm
 from .models import Trainer, Client, GymUser
 
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
@@ -47,7 +46,6 @@ def register_view(request):
     return render(request, 'user/register.html', context)  # Change 'your_template.html' to your actual template name
 
 
-
 def login_view(request):
     if request.method == 'POST':
         form = GymUserLoginForm(request, data=request.POST)
@@ -66,6 +64,7 @@ def login_view(request):
     else:
         form = GymUserLoginForm()
     return render(request, 'user/login.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)
