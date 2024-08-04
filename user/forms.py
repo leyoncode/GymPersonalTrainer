@@ -26,4 +26,4 @@ class TrainerRegistrationForm(forms.ModelForm):
 class ClientRegistrationForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['user_contact', 'age', 'weight_in_lbs', 'reason_for_training', 'gender']
+        fields = ['user_contact', 'age', 'weight_in_lbs', 'reason_for_training', 'gender', 'trainer']

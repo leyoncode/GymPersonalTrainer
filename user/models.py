@@ -33,7 +33,7 @@ class Trainer(models.Model):
 class Client(models.Model):
     user = models.OneToOneField(GymUser, on_delete=models.CASCADE, primary_key=True)
 
-    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE, null=False, blank=False)
 
     user_contact = models.CharField(max_length=20)  # phone numbers
     age = models.PositiveIntegerField(default=0)
