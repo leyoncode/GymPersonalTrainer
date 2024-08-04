@@ -20,10 +20,10 @@ class GymUserLoginForm(AuthenticationForm):
 class TrainerRegistrationForm(forms.ModelForm):
     class Meta:
         model = Trainer
-        fields = ['contact', 'website']
+        fields = ['trainer_contact', 'website']
 
 
 class ClientRegistrationForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['contact', 'age', 'weight_in_lbs', 'reason_for_training', 'gender']
+        fields = ['user_contact', 'age', 'weight_in_lbs', 'reason_for_training', 'gender']
