@@ -38,7 +38,7 @@ class Client(models.Model):
     user_contact = models.CharField(max_length=20)  # phone numbers
     age = models.PositiveIntegerField(default=0)
     weight_in_lbs = models.PositiveIntegerField(default=0)
-    reason_for_training = models.CharField(null=True, blank=True, max_length=255)
+    reason_for_training = models.CharField(null=False, blank=False, max_length=255)
 
     MALE = 'Male'
     FEMALE = 'Female'
