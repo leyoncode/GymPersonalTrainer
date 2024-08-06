@@ -18,21 +18,38 @@ def register_view(request):
         client_form = ClientRegistrationForm(request.POST)
 
         if gymuser_form.is_valid():
-            user = gymuser_form.save()
+            user = gymuser_form.save(commit=False)
             user_type = gymuser_form.cleaned_data.get('user_type')
+            user_created = False
 
-            if user_type == GymUser.TRAINER and trainer_form.is_valid():
-                trainer = trainer_form.save(commit=False)
-                trainer.user = user
-                trainer.save()
-            elif user_type == GymUser.CLIENT and client_form.is_valid():
-                client = client_form.save(commit=False)
-                client.user = user
-                client.save()
+            if user_type == GymUser.TRAINER:
+                if trainer_form.is_valid():
+                    user.save()
+                    trainer = trainer_form.save(commit=False)
+                    trainer.user = user
+                    trainer.save()
+                    user_created = True
+                else:
+                    messages.error(request, 'Please correct the errors in the trainer form.')
+            elif user_type == GymUser.CLIENT:
+                if client_form.is_valid():
+                    user.save()
+                    client = client_form.save(commit=False)
+                    client.user = user
+                    client.save()
+                    user_created = True
+                else:
+                    messages.error(request, 'Please correct the errors in the client form.')
+            else:
+                messages.error(request, 'Invalid user type selected.')
 
-            login(request, user)
-            messages.success(request, f'Account created for {user.username}!')
-            return redirect('home')  # Change 'home' to your home page name
+            if user_created:
+                login(request, user)
+                messages.success(request, f'Account created for {user.username}!')
+                return redirect('home')
+        else:
+            messages.error(request, 'Please correct the errors in the registration form.')
+
     else:
         gymuser_form = GymUserRegistrationForm()
         trainer_form = TrainerRegistrationForm()
@@ -43,7 +60,7 @@ def register_view(request):
         'trainer_form': trainer_form,
         'client_form': client_form
     }
-    return render(request, 'user/register.html', context)  # Change 'your_template.html' to your actual template name
+    return render(request, 'user/register.html', context)
 
 
 def login_view(request):
