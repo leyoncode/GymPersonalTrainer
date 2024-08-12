@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Trainer Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Client Dashboard</h2>
+
+    <ul class="list-group mt-3">
+        {% for workout in workouts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'workout_detail' workout.id %}">{{ workout.name }}</a>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No workouts available.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

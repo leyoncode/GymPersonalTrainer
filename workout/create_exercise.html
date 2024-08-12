@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+<h2>Create Exercise for {{ workout.name }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Save Exercise</button>
+</form>
+<a href="{% url 'trainer_dashboard' %}">Back to Dashboard</a>

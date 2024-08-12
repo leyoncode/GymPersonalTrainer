@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Exercise{% endblock %}
+
+{% block content %}
+<h2>Add New Exercise to Workout: <u><em> {{ workout.name }} </em></u>  </h2>
+
+<form method="post" action="{% url 'create_exercise' workout.id %}">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" class="btn btn-success">Add Exercise</button>
+</form>
+
+<a href="{% url 'workout_detail' workout.id %}" class="btn btn-info">Back to Workout Details</a>
+{% endblock %}

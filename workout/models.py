@@ -17,11 +17,11 @@ class Workout(models.Model):
 
 
 class Exercise(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Exercise Name")
-    sets = models.PositiveIntegerField(verbose_name="Number of Sets")
-    reps = models.PositiveIntegerField(verbose_name="Number of Reps")
-    tutorial_url = models.URLField(verbose_name="Tutorial URL")
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, verbose_name="Associated Workout")
+    name = models.CharField(max_length=100, verbose_name="Exercise Name", null=False, blank=False)
+    sets = models.PositiveIntegerField(verbose_name="Number of Sets", null=False, blank=False)
+    reps = models.PositiveIntegerField(verbose_name="Number of Reps", null=False, blank=False)
+    tutorial_url = models.URLField(verbose_name="Tutorial URL", blank=True)
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, verbose_name="Associated Workout", null=False, blank=False)
 
     def __str__(self):
         return f"{self.name} ({self.workout.name})"

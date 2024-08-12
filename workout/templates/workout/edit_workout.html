@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h2> Edit Workout </h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+    </form>
+    <hr><br>
+    <a href="{% url 'trainer_dashboard' %}">Back to Dashboard</a>
+
+{% endblock %}

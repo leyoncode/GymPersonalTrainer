@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Workout Details {% endblock %}
+
+{% block content %}
+    <h2>{{ workout.name }} Details</h2>
+    <p>{{ workout.description }}</p>
+    <p>Days per week: {{ workout.days_per_week }}</p>
+
+    <p>Created by <strong>{{ workout.trainer.user.username }}</strong> for <strong>{{ workout.client.user.username }}</strong></p>
+
+    <h3>Exercises</h3>
+    {% if exercises %}
+    <ul class="list-group">
+        {% for exercise in exercises %}
+        <li class="list-group-item">
+            {{ exercise.name }} - Sets: {{ exercise.sets }}, Reps: {{ exercise.reps }}
+            {% if exercise.tutorial_url %}
+                <br>
+                <a href="{{ exercise.tutorial_url }}" target="_blank">Tutorial: {{ exercise.tutorial_url }}</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No exercises for this workout.</p>
+    {% endif %}
+
+    <hr><br>
+    <a href="{% url 'trainer_dashboard' %}">Back to Dashboard</a>
+
+{% endblock %}
