@@ -23,7 +23,7 @@ class GymUser(AbstractUser):
 class Trainer(models.Model):
     user = models.OneToOneField(GymUser, on_delete=models.CASCADE, primary_key=True)
 
-    trainer_contact = models.CharField(max_length=20)  # phone numbers
+    trainer_contact = models.CharField(max_length=20, blank=False)  # phone numbers
     website = models.URLField(null=True, blank=True)
 
     def __str__(self):
