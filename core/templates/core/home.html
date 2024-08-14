@@ -1,9 +1,30 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title%} Home {% endblock %}
 
 {% block content %}
 
-    <h1>Welcome to your Personal Trainer's Website</h1>
+    <div class="container-fluid text-center">
+        <h1>Welcome to your Personal Trainer's Website</h1>
+        <br>
+
+        <div class="position-relative">
+            <img src="{% static 'images/pexels-victorfreitas-841130.jpg' %}" class="img-fluid w-100" style="height: 300px; object-fit: cover;" alt="Workout Banner">
+            <div class="position-absolute top-50 start-50 translate-middle text-center text-white bg-dark bg-opacity-50 p-3 rounded">
+                <h1 class="display-4">Get Fit, Stay Strong</h1>
+            </div>
+        </div>
+
+        <p>
+            <h3> Login as a Client: <a class="btn btn-outline-success ms-3" href="/login">Login</a> </h3>
+
+        </p>
+
+        <p>
+            <h3> Register a new account: <a class="btn btn-outline-success ms-3" href="/register">Register</a> </h3>
+
+        </p>
+    </div>
 
 {% endblock %}
