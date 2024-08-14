@@ -22,8 +22,14 @@ def trainer_dashboard(request):
 
 @login_required
 def client_dashboard(request):
-    workouts = Workout.objects.filter(client=request.user.client)
-    return render(request, 'workout/client_dashboard.html', {'workouts': workouts})
+    client = request.user.client  # Assuming 'client' is directly accessible like this
+    workouts = Workout.objects.filter(client=client)
+    trainer = client.trainer  # Accessing the trainer associated with the client
+    return render(request, 'workout/client_dashboard.html', {
+        'workouts': workouts,
+        'trainer': trainer
+    })
+
 
 
 @login_required

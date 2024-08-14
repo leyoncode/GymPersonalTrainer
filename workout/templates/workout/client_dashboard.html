@@ -1,17 +1,49 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Trainer Dashboard{% endblock %}
+{% block title %}Client Dashboard{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
     <h2>Client Dashboard</h2>
-
-    <ul class="list-group mt-3">
-        {% for workout in workouts %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{% url 'workout_detail' workout.id %}">{{ workout.name }}</a>
-        </li>
-        {% empty %}
-        <li class="list-group-item">No workouts available.</li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3>Your Trainer</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ trainer.user.username }}</p>
+                    <p><strong>Contact:</strong> {{ trainer.trainer_contact }}</p>
+                    {% if trainer.website %}
+                    <p><strong>Website:</strong> <a href="{{ trainer.website }}" target="_blank">{{ trainer.website }}</a></p>
+                    {% else %}
+                    <p><strong>Website:</strong> Not available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Workouts</h3>
+                </div>
+                <div class="card-body">
+                    {% if workouts %}
+                    <div class="list-group">
+                        {% for workout in workouts %}
+                        <a href="{% url 'workout_detail' workout.id %}" class="list-group-item list-group-item-action">
+                            {{ workout.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>No workouts available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
