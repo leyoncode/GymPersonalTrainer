@@ -2,21 +2,61 @@
 
 {% block title %}Trainer Dashboard{% endblock %}
 
+{% load static %}  <!-- Load static if you need CSS or JavaScript -->
+
 {% block content %}
+<div class="container mt-4">
     <h2>Trainer Dashboard</h2>
-    <a href="{% url 'create_workout' %}" class="btn btn-primary">Create Workout</a>
-    <ul class="list-group mt-3">
-        {% for workout in workouts %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{% url 'workout_detail' workout.id %}">{{ workout.name }}</a>
-            <div>
-                <a href="{% url 'edit_workout' workout.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'delete_workout' workout.id %}" class="btn btn-danger btn-sm">Delete</a>
-                <a href="{% url 'create_exercise' workout.id %}" class="btn btn-info btn-sm">Add Exercise</a>
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{% url 'create_workout' %}" class="btn btn-primary">Create Workout</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Workouts</h3>
+                </div>
+                <div class="card-body">
+                    {% for workout in workouts %}
+                    <div class="row mb-2 align-items-center">
+                        <div class="col-6">
+                            <a href="{% url 'workout_detail' workout.id %}">{{ workout.name }}</a>
+                        </div>
+                        <div class="col-6 text-center">
+                            <a href="{% url 'edit_workout' workout.id %}" class="btn btn-warning btn-sm mx-1">Edit</a>
+                            <a href="{% url 'delete_workout' workout.id %}" class="btn btn-danger btn-sm mx-1">Delete</a>
+                            <a href="{% url 'create_exercise' workout.id %}" class="btn btn-info btn-sm mx-1">Add Exercise</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No workouts available.</p>
+                    {% endfor %}
+                </div>
             </div>
-        </li>
-        {% empty %}
-        <li class="list-group-item">No workouts available.</li>
-        {% endfor %}
-    </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Clients</h3>
+                </div>
+                <div class="card-body">
+                    {% for client in clients %}
+                    <div class="row mb-2">
+                        <div class="col-8">
+                            {{ client.user.username }}
+                        </div>
+                        <div class="col-4">
+                            {{ client.user_contact }}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>No clients assigned.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

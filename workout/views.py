@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from user.models import Trainer, GymUser
+from user.models import Trainer, GymUser, Client
 from .models import Workout, Exercise
 from .forms import WorkoutForm, ExerciseForm
 
@@ -14,8 +14,10 @@ def trainer_dashboard(request):
     trainer_instance = Trainer.objects.get(user=request.user)
     # Fetch workouts where the trainer is the logged-in user
     workouts = Workout.objects.filter(trainer=trainer_instance)
+    # Fetch the clients associated with the trainer
+    clients = Client.objects.filter(trainer=trainer_instance)
 
-    return render(request, 'workout/trainer_dashboard.html', {'workouts': workouts})
+    return render(request, 'workout/trainer_dashboard.html', {'workouts': workouts, 'clients': clients})
 
 
 @login_required
